@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- 스프링 MVC annotation(주석문)을 활성화하기 위해 사용된다 -->
+	<context:annotation-config/>
+	
+	<!-- viewResolver 설정 (사용자 view의 위치, 확장자명 설정)-->
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> myClass cls = enw myClass();
+		변수설정 property
+		<property name="prefix" value="/WEB-INF/views/"/> value 어디에다 jsp를 넣어두었냐
+		<property name="suffix" value=".jsp"/>	확장자명
+	</bean> -->
+	
+	<!-- tiles 설정 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/layouts.xml</value>	<!-- 타일즈 설정파일 경로 정하기 -->
+			</list>
+		</property>
+	</bean>	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="requestContextAttribute" value="requestContext"/>
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>		
+	</bean>
+	
+	<!-- java 파일의  공통 package 명 설정 -->
+	<context:component-scan base-package="kh.com.edu"/> <!-- base-package 공통패키지(3)뒤에 .controller와같이 패스설정가능 -->
+	
+	<!-- java-> web 한글깨짐 방지하기위해 -->	
+	<!-- 주석문의 사용을 허용한다 -->
+	<mvc:annotation-driven/>	
+	<!-- spring에서 처리할 수 없는 요청은 tomcat에 위임 -->
+	<mvc:default-servlet-handler/>
+	
+	
+
+
+</beans>
